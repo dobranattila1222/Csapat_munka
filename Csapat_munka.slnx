@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path="Feladat.cs" />
+    <File Path="Jatek.cs" />
+    <File Path="Nehezseg.cs" />
+  </Folder>
+  <Project Path="Casino_csapat/Casino_csapat.csproj" Id="4f162c3b-3d75-4a66-8469-0045405baae7" />
+</Solution>
