@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Casino_csapat
 {
@@ -17,38 +13,46 @@ namespace Casino_csapat
             while (fut)
             {
                 Console.Clear();
-                //Cím
+
+                // Cím
                 string cim = "\\\\||||Grand Casino Royale||||////";
                 int kozep = (Console.WindowWidth - cim.Length) / 2;
 
                 Console.SetCursorPosition(kozep, 2);
                 Console.WriteLine(cim);
 
-                //választás
+                // Főmenü
+                Console.WriteLine();
                 Console.WriteLine("Új játék kezdése : 1 gomb");
-                Console.WriteLine("Nehézség Kiválasztása : 2 gomb");
-                Console.WriteLine("Játék Feladatása : 3 gomb");
+                Console.WriteLine("Nehézség kiválasztása : 2 gomb");
+                Console.WriteLine("Kilépés : 3 gomb");
 
                 Console.WriteLine();
                 Console.WriteLine("Kiválasztott nehézség: " + kivalasztottNehezseg);
                 Console.WriteLine("Kezdőtőke: " + kezdoToke + " Ft");
-                ConsoleKeyInfo gomb = Console.ReadKey();
 
-                if (gomb.Key == ConsoleKey.D1)
+                ConsoleKeyInfo gomb = Console.ReadKey(true);
+
+                // Új játék
+                if (gomb.Key == ConsoleKey.D1 ||
+                    gomb.Key == ConsoleKey.NumPad1)
                 {
                     if (kivalasztottNehezseg == "Nincs kiválasztva")
                     {
-                        Console.WriteLine("\nElőször válassz nehézségi szintet!");
-                        Console.ReadKey();
+                        Console.WriteLine();
+                        Console.WriteLine("Először válassz nehézségi szintet!");
+                        Console.ReadKey(true);
                     }
                     else
                     {
-                        Console.Clear();
-                        Jatek jatek = new Jatek();
-                        jatek.JatekInditasa();
+                        Jatek jatek = new Jatek(kezdoToke);
+                        kezdoToke = jatek.JatekInditasa();
                     }
                 }
-                else if (gomb.Key == ConsoleKey.D2)
+
+                // Nehézség kiválasztása
+                else if (gomb.Key == ConsoleKey.D2 ||
+                         gomb.Key == ConsoleKey.NumPad2)
                 {
                     Console.Clear();
 
@@ -62,20 +66,33 @@ namespace Casino_csapat
 
                         Console.Clear();
 
-                        Console.WriteLine("Kiválasztott nehézség: " + nehezseg.nehezsegiSzint);
-                        Console.WriteLine("Kezdőtőke: " + nehezseg.penz + " Ft");
+                        Console.WriteLine("Kiválasztott nehézség: "
+                            + kivalasztottNehezseg);
 
-                        Console.ReadKey();
+                        Console.WriteLine("Kezdőtőke: "
+                            + kezdoToke + " Ft");
+
+                        Console.WriteLine();
+                        Console.WriteLine("Nyomj meg egy gombot a folytatáshoz...");
+                        Console.ReadKey(true);
                     }
-                    else if (gomb.Key == ConsoleKey.D3)
-                    {
-                        Console.WriteLine("Kilépés...");
-                        return;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Érvénytelen választás!");
-                         }
+                }
+
+                // Kilépés
+                else if (gomb.Key == ConsoleKey.D3 ||
+                         gomb.Key == ConsoleKey.NumPad3)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Kilépés a játékból...");
+                    fut = false;
+                }
+
+                // Hibás választás
+                else
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Érvénytelen választás!");
+                    Console.ReadKey(true);
                 }
             }
         }

@@ -43,9 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="blackjack.cs" />
+    <Compile Include="Jatekok.cs" />
     <Compile Include="Kilepes.cs" />
     <Compile Include="Jatek.cs" />
+    <Compile Include="kockajatek.cs" />
     <Compile Include="Nehezseg.cs" />
+    <Compile Include="nyerogep.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
