@@ -50,8 +50,11 @@
     <Compile Include="kockajatek.cs" />
     <Compile Include="Nehezseg.cs" />
     <Compile Include="nyerogep.cs" />
+    <Compile Include="poker.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="roulette.cs" />
+    <Compile Include="szerencsekerek.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
