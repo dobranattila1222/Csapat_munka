@@ -94,7 +94,10 @@ namespace Casino_csapat
             Console.WriteLine("Végső pontszámod: " + penz + " pont");
             Console.WriteLine();
             Console.WriteLine("Köszönjük a játékot!");
+            Console.WriteLine("Nyomj meg egy gombot a kilépéshez...");
+            Console.WriteLine("Készitette: Dobrán Attila, Csáki Áron, Kocsis Károly");
             Console.ReadKey(true);
+            Environment.Exit(0);
         }
     }
 }
