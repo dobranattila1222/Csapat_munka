@@ -11,9 +11,9 @@ namespace Casino_csapat
         public Nehezseg NehezsegKivalasztasa()
         {
             Console.WriteLine("Válassz nehézségi szintet!");
-            Console.WriteLine("1 - Könnyű (100 000 Ft)");
-            Console.WriteLine("2 - Közepes (50 000 Ft)");
-            Console.WriteLine("3 - Nehéz (25 000 Ft)");
+            Console.WriteLine("[1] - Könnyű (100 000 Ft)");
+            Console.WriteLine("[2] - Közepes (50 000 Ft)");
+            Console.WriteLine("[3] - Nehéz (25 000 Ft)");
 
             ConsoleKeyInfo valasztas = Console.ReadKey();
 

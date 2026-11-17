@@ -23,8 +23,8 @@ namespace Casino_csapat
                 Console.WriteLine("Egyenleg: " + penz + " Ft");
                 Console.WriteLine();
 
-                Console.WriteLine("1 - Új dobás");
-                Console.WriteLine("2 - Vissza a játékok menüjébe");
+                Console.WriteLine("[1] - Új dobás");
+                Console.WriteLine("[2] - Vissza a játékok menüjébe");
                 Console.WriteLine();
 
                 ConsoleKeyInfo gomb = Console.ReadKey(true);

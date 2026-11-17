@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Net.Sockets;
 
 namespace Casino_csapat
 {
@@ -28,18 +29,18 @@ namespace Casino_csapat
                 Console.WriteLine("          JÁTÉKOK MENÜJE");
                 Console.WriteLine();
 
-                Console.WriteLine("1 - Nyerőgép");
-                Console.WriteLine("2 - Kockajáték");
-                Console.WriteLine("3 - Blackjack");
-                Console.WriteLine("4 - Rulett");
-                Console.WriteLine("5 - Texas Hold'em póker");
-                Console.WriteLine("6 - Szerencsekerek");
-                Console.WriteLine("7 - Esélyek megtekintése");
-                Console.WriteLine("8 - Kilépés");
+                Console.WriteLine("[1] - Nyerőgép");
+                Console.WriteLine("[2] - Kockajáték");
+                Console.WriteLine("[3] - Blackjack");
+                Console.WriteLine("[4] - Rulett");
+                Console.WriteLine("[5] - Texas Hold'em póker");
+                Console.WriteLine("[6] - Szerencsekerek");
+                Console.WriteLine("[7] - Esélyek megtekintése");
+                Console.WriteLine("[8] - Kilépés");
 
                 Console.WriteLine();
                 Console.WriteLine("--------------------------------");
-                Console.WriteLine("Egyenleg: " + penz + " pont");
+                Console.WriteLine("Egyenleg: " + penz + " pénz");
                 Console.WriteLine("--------------------------------");
 
                 Console.WriteLine();
@@ -179,7 +180,6 @@ namespace Casino_csapat
 
             Console.WriteLine();
             Console.WriteLine("Nyomj meg egy gombot a kilépéshez...");
-
             Console.ReadKey(true);
         }
     }

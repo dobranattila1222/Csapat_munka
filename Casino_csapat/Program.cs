@@ -23,9 +23,9 @@ namespace Casino_csapat
 
                 // Főmenü
                 Console.WriteLine();
-                Console.WriteLine("Új játék kezdése : 1 gomb");
-                Console.WriteLine("Nehézség kiválasztása : 2 gomb");
-                Console.WriteLine("Kilépés : 3 gomb");
+                Console.WriteLine("[1] Új játék kezdése");
+                Console.WriteLine("[2] Nehézség kiválasztása");
+                Console.WriteLine("[3] Kilépés");
 
                 Console.WriteLine();
                 Console.WriteLine("Kiválasztott nehézség: " + kivalasztottNehezseg);

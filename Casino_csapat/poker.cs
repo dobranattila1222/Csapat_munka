@@ -18,6 +18,12 @@ namespace Casino_csapat
         private int partiPontErteke = 1;
         private Random random = new Random();
 
+        // Kizárólag játékbeli, virtuális zsetonok.
+        private int aktualisPenz;
+        private int nevezesiDij;
+        private bool bajnoksagNevezesAktiv;
+        private bool jutalomKifizetve;
+
         private class Kartya
         {
             public int Ertek;
@@ -56,6 +62,12 @@ namespace Casino_csapat
 
         public int PokerInditasa(int penz)
         {
+            aktualisPenz = penz;
+
+            // Az első bajnokság előtt nevezni kell.
+            if (!BajnoksagInditasa())
+                return aktualisPenz;
+
             bool fut = true;
 
             while (fut)
@@ -66,8 +78,10 @@ namespace Casino_csapat
                 Console.WriteLine("1 - Új parti");
                 Console.WriteLine("2 - Nehézség kiválasztása");
                 Console.WriteLine("3 - Parti pontértékének beállítása");
-                Console.WriteLine("4 - Bajnokság újrakezdése");
+                Console.WriteLine("4 - Új bajnokság indítása (nevezés)");
                 Console.WriteLine("5 - Vissza a játékok menüjébe");
+                Console.WriteLine();
+                Console.WriteLine("Virtuális egyenleg: " + aktualisPenz + " pénz");
 
                 Console.WriteLine();
                 PontTabla();
@@ -83,7 +97,8 @@ namespace Casino_csapat
                         Console.WriteLine("A gép nyerte a bajnokságot!");
 
                     Console.WriteLine();
-                    Console.WriteLine("Új bajnokság indításához válaszd a 3-as menüpontot.");
+                    Console.WriteLine("Új bajnokság indításához válaszd a 4-es menüpontot.");
+                    Console.WriteLine("A nevezési díj ötszörösét csak a teljes bajnokság megnyerésekor kapod meg.");
                 }
 
                 Console.WriteLine();
@@ -116,10 +131,14 @@ namespace Casino_csapat
                 else if (gomb.Key == ConsoleKey.D4 ||
                          gomb.Key == ConsoleKey.NumPad4)
                 {
-                    jatekosPont = 0;
-                    gepPont = 0;
-
-                    Uzenet("Új bajnokság kezdődött!");
+                    if (jatekosPont >= CelPont || gepPont >= CelPont)
+                    {
+                        BajnoksagInditasa();
+                    }
+                    else
+                    {
+                        Uzenet("A jelenlegi bajnokság még tart. Előbb fejezd be!");
+                    }
                 }
                 else if (gomb.Key == ConsoleKey.D5 ||
                          gomb.Key == ConsoleKey.NumPad5)
@@ -128,7 +147,59 @@ namespace Casino_csapat
                 }
             }
 
-            return penz;
+            return aktualisPenz;
+        }
+
+        private bool BajnoksagInditasa()
+        {
+            Console.Clear();
+            Fejlec();
+            Console.WriteLine("BAJNOKSÁGI NEVEZÉS");
+            Console.WriteLine("--------------------------------");
+            Console.WriteLine("A nevezés játékbeli, virtuális zsetonnal történik.");
+            Console.WriteLine("Győzelem esetén a nevezési díj 5-szörösét kapod.");
+            Console.WriteLine("Vereség esetén a nevezési díj nem jár vissza.");
+            Console.WriteLine();
+            Console.WriteLine("Virtuális egyenleged: " + aktualisPenz + " pénz");
+            Console.WriteLine();
+            Console.WriteLine("Válassz nevezési díjat:");
+            Console.WriteLine("1 - 10000 pénz");
+            Console.WriteLine("2 - 25000 pénz");
+            Console.WriteLine("3 - 50000 pénz");
+            Console.WriteLine("0 - Vissza");
+            Console.Write("Választás: ");
+
+            ConsoleKeyInfo gomb = Console.ReadKey(true);
+            int dij;
+
+            if (gomb.Key == ConsoleKey.D1 || gomb.Key == ConsoleKey.NumPad1)
+                dij = 10000;
+            else if (gomb.Key == ConsoleKey.D2 || gomb.Key == ConsoleKey.NumPad2)
+                dij = 25000;
+            else if (gomb.Key == ConsoleKey.D3 || gomb.Key == ConsoleKey.NumPad3)
+                dij = 50000;
+            else
+            {
+                Uzenet("A nevezést megszakítottad.");
+                return false;
+            }
+
+            if (aktualisPenz < dij)
+            {
+                Uzenet("Nincs elegendő virtuális zsetonod a nevezéshez!");
+                return false;
+            }
+
+            aktualisPenz -= dij;
+            nevezesiDij = dij;
+            bajnoksagNevezesAktiv = true;
+            jutalomKifizetve = false;
+            jatekosPont = 0;
+            gepPont = 0;
+
+            Uzenet("Sikeres nevezés! Levontunk " + dij + " pénzt. " +
+                   "Bajnokság-győzelem esetén " + (dij * 5) + " pénzt kapsz.");
+            return true;
         }
 
         private void Fejlec()
@@ -148,6 +219,11 @@ namespace Casino_csapat
             Console.WriteLine("--------------------------------");
             Console.WriteLine("Egy megnyert parti értéke: " + partiPontErteke + " pont");
             Console.WriteLine("A győzelemhez " + CelPont + " pont szükséges.");
+            if (bajnoksagNevezesAktiv)
+            {
+                Console.WriteLine("Nevezési díj: " + nevezesiDij + " virtuális pénz");
+                Console.WriteLine("Lehetséges jutalom: " + (nevezesiDij * 5) + " virtuális pénz");
+            }
         }
 
         private void NehezsegValasztasa()
@@ -542,6 +618,15 @@ namespace Casino_csapat
                 Console.WriteLine("================================");
                 Console.WriteLine("MEGNYERTED A BAJNOKSÁGOT!");
                 Console.WriteLine("================================");
+                if (bajnoksagNevezesAktiv && !jutalomKifizetve)
+                {
+                    int jutalom = nevezesiDij * 5;
+                    aktualisPenz += jutalom;
+                    jutalomKifizetve = true;
+                    bajnoksagNevezesAktiv = false;
+                    Console.WriteLine("Bajnoksági jutalmad: " + jutalom + " virtuális zseton!");
+                    Console.WriteLine("Új virtuális egyenleged: " + aktualisPenz + " zseton");
+                }
             }
             else if (gepPont >= CelPont)
             {
@@ -549,6 +634,13 @@ namespace Casino_csapat
                 Console.WriteLine("================================");
                 Console.WriteLine("A GÉP NYERTE A BAJNOKSÁGOT!");
                 Console.WriteLine("================================");
+                if (bajnoksagNevezesAktiv)
+                {
+                    bajnoksagNevezesAktiv = false;
+                    jutalomKifizetve = true;
+                    Console.WriteLine("Nem nyertél jutalmat. A nevezési díj nem jár vissza.");
+                    Console.WriteLine("Virtuális egyenleged: " + aktualisPenz + " zseton");
+                }
             }
         }
 
